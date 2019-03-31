@@ -3611,6 +3611,24 @@ const devices = [
             execute(ep1, actions, callback);
         },
     },
+    
+    // Ninja Blocks Zigbee Switch
+    {
+        zigbeeModel: ['Ninja Smart Plug'],
+        model: 'SPSER-A',
+        vendor: 'Ninja Blocks',
+        description: 'Ninja Sphere Smart Switch',
+        supports: 'on/off, power measurement',
+        fromZigbee: [fz.generic_battery_change],
+        toZigbee: [tz.on_off],
+        configure: (ieeeAddr, shepherd, coordinator, callback) => {
+            const device = shepherd.find(ieeeAddr, 1);
+            const actions = [
+                (cb) => device.bind('genOnOff', coordinator, cb),
+            ];
+            execute(device, actions, callback);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>
